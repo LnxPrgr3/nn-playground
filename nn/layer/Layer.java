@@ -119,6 +119,9 @@ public class Layer {
 		this.neuron = (Expression)bind(neuron);
 	}
 	
+	public int numInputs() { return numInputs; }
+	public int numOutputs() { return numOutputs; }
+	
 	private int weightIndex(int input, int output) {
 		return output*numInputs+input;
 	}

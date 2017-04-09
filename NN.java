@@ -1,3 +1,4 @@
+import nn.*;
 import nn.expression.Expression;
 import nn.layer.*;
 
@@ -110,15 +111,13 @@ public class NN {
 		layer2.weight(1, 0, 20);
 		layer2.bias(0, -30);
 		double[] inputs = new double[2];
-		double[] l1o = new double[2];
-		double[] l2o = new double[1];
+		Network network = new Network(layer, layer2);
 		for(int i = 0; i < 2; ++i) {
 			for(int j = 0; j < 2; ++j) {
 				inputs[0] = i;
 				inputs[1] = j;
-				layer.evaluate(inputs, l1o);
-				layer2.evaluate(l1o, l2o);
-				System.out.printf("(%f, %f) -> (%f, %f) -> %f\n", inputs[0], inputs[1], l1o[0], l1o[1], l2o[0]);
+				double[] l2o = network.evaluate(inputs);
+				System.out.printf("(%f, %f) -> %f\n", inputs[0], inputs[1], l2o[0]);
 			}
 		}
 	}
