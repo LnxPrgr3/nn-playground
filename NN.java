@@ -1,4 +1,5 @@
 import nn.expression.Expression;
+import nn.layer.*;
 
 public class NN {
 	private static class Variable extends Expression {
@@ -37,6 +38,11 @@ public class NN {
 		@Override
 		public double derivative(Expression x) {
 			return x == this ? 1 : 0;
+		}
+
+		@Override
+		public Expression newWithArgs(Expression... args) {
+			throw new IllegalArgumentException("Attempt to pass new arguments to a value");
 		}
 	}
 	
@@ -91,5 +97,29 @@ public class NN {
 		x.value(x.value()+step_size*f.derivative(x));
 		y.value(y.value()+step_size*f.derivative(y));
 		System.out.printf("circuit output after one backprop: %f\n", f.value());
+		nn.neuron.Standard neuron = new nn.neuron.Standard();
+		Layer layer = new Layer(2, 2, neuron);
+		layer.weight(0, 0, -20);
+		layer.weight(1, 0, -20);
+		layer.weight(0, 1, 20);
+		layer.weight(1, 1, 20);
+		layer.bias(0, 30);
+		layer.bias(1, -10);
+		Layer layer2 = new Layer(2, 1, neuron);
+		layer2.weight(0, 0, 20);
+		layer2.weight(1, 0, 20);
+		layer2.bias(0, -30);
+		double[] inputs = new double[2];
+		double[] l1o = new double[2];
+		double[] l2o = new double[1];
+		for(int i = 0; i < 2; ++i) {
+			for(int j = 0; j < 2; ++j) {
+				inputs[0] = i;
+				inputs[1] = j;
+				layer.evaluate(inputs, l1o);
+				layer2.evaluate(l1o, l2o);
+				System.out.printf("(%f, %f) -> (%f, %f) -> %f\n", inputs[0], inputs[1], l1o[0], l1o[1], l2o[0]);
+			}
+		}
 	}
 }

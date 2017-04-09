@@ -14,4 +14,12 @@ public class Reciprocal extends UnaryExpression {
 	public double derivative(Expression x) {
 		return -argument.derivative(x) / (argument.value()*argument.value());
 	}
+
+	@Override
+	public Expression newWithArgs(Expression... args) {
+		if(args.length != 1) {
+			throw new IllegalArgumentException("Reciprocal cannot accept multiple arguments!");
+		}
+		return new Reciprocal(args[0]);
+	}
 }

@@ -3,6 +3,7 @@ package nn.expression;
 public abstract class Expression implements Iterable<Expression> {
 	public abstract double value();
 	public abstract double derivative(Expression x);
+	public abstract Expression newWithArgs(Expression... args);
 	
 	public static Expression sum(Expression... args) {
 		return new Sum(args);

@@ -37,4 +37,9 @@ public class Product extends VariadicExpression {
 		}
 		return sum;
 	}
+
+	@Override
+	public Expression newWithArgs(Expression... args) {
+		return new Product(args);
+	}
 }

@@ -25,4 +25,9 @@ public class Sum extends VariadicExpression {
 		return sum;
 	}
 
+	@Override
+	public Expression newWithArgs(Expression... args) {
+		return new Sum(args);
+	}
+
 }
